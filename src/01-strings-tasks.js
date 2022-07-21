@@ -295,7 +295,13 @@ function encodeToRot13(str) {
  */
 function isString(value) {
   // throw new Error('Not implemented');
-  return (typeof value) === 'string';
+  if (!value) {
+    return false;
+  } if (Array.isArray(value)) {
+    return false;
+  }
+  const a = `${value}`;
+  return (typeof a) === 'string';
 }
 
 
