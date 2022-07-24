@@ -46,8 +46,9 @@ function getComposition(f, g) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  // throw new Error('Not implemented');
+  return (n) => n ** exponent;
 }
 
 
@@ -99,8 +100,17 @@ function getPolynom(/* ...a */) {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  // throw new Error('Not implemented');
+  const memory = new Map();
+  return (arg) => {
+    if (memory.has(arg)) {
+      return memory.get(arg);
+    }
+    const result = func(arg);
+    memory.set(arg, result);
+    return result;
+  };
 }
 
 
@@ -121,15 +131,15 @@ function memoize(/* func */) {
  */
 function retry(/* func, attempts */) {
   throw new Error('Not implemented');
-  /* try {
-    func()
-  } catch {
-    for(let i=0; i<attempts - 2; i +=1){
-      func()
+  /* let count = 0;
+  return () => {
+
+    if (attempts - 1 > count) {
+      count += 1;
+      return retry();
     }
-  } finally {
     return func()
-    } */
+  }; */
 }
 
 
