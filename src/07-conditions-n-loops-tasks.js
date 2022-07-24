@@ -195,8 +195,26 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  // throw new Error('Not implemented');
+  const a = {};
+  const b = str.split('');
+  b.map((el) => {
+    if (a[el]) {
+      a[el] += 1;
+    } else {
+      a[el] = 1;
+    }
+    return el;
+  });
+  const c = Object.keys(a);
+
+  for (let i = 0; i < b.length; i += 1) {
+    if (a[c[i]] === 1) {
+      return c[i];
+    }
+  }
+  return null;
 }
 
 
@@ -222,8 +240,26 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  // throw new Error('Not implemented');
+  let result = '';
+  if (isStartIncluded) {
+    result = '[';
+  } else {
+    result = '(';
+  }
+  if (a < b) {
+    result += `${a}, ${b}`;
+  } else {
+    result += `${b}, ${a}`;
+  }
+
+  if (isEndIncluded) {
+    result += ']';
+  } else {
+    result += ')';
+  }
+  return result;
 }
 
 
@@ -239,8 +275,9 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  // throw new Error('Not implemented');
+  return str.split('').reverse().join('');
 }
 
 
@@ -256,8 +293,9 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  // throw new Error('Not implemented');
+  return +(String(num).split('').reverse().join(''));
 }
 
 
@@ -272,7 +310,7 @@ function reverseInteger(/* num */) {
  *
  * @example:
  *   79927398713      => true
- *   4012888888881881 => true
+ *   4012 8888 8888 1881 => true
  *   5123456789012346 => true
  *   378282246310005  => true
  *   371449635398431  => true
@@ -283,7 +321,24 @@ function reverseInteger(/* num */) {
  */
 function isCreditCardNumber(/* ccn */) {
   throw new Error('Not implemented');
+  /* let nCheck = 0;
+  let bEven = false;
+
+  for (let n = ccn.length - 1; n >= 0; n -= 1) {
+    let nDigit = parseInt(ccn.charAt(n), 10);
+
+    if (bEven && (nDigit * 2) > 9) {
+      nDigit *= 2;
+      nDigit -= 9;
+    }
+
+    nCheck += nDigit;
+    bEven = !bEven;
+  }
+
+  return (nCheck % 10) === 0; */
 }
+
 
 /**
  * Returns the digital root of integer:
@@ -299,8 +354,10 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  // throw new Error('Not implemented');
+  const ab = String(num).split('').reduce((a, b) => +a + +b);
+  return ab > 9 ? getDigitalRoot(ab) : ab;
 }
 
 
@@ -325,8 +382,36 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  // throw new Error('Not implemented');
+  if (str.length === 0) {
+    return true;
+  }
+  if (str.length % 2 !== 0) {
+    return false;
+  }
+  const objСlosed = {
+    '{': '}',
+    '[': ']',
+    '<': '>',
+    '(': ')',
+  };
+  const obj = {
+    '{': '{',
+    '[': '[',
+    '(': '(',
+    '<': '<',
+  };
+  const acc = [];
+  const a = str.split('');
+  for (let i = 0; i < a.length; i += 1) {
+    if (obj[a[i]]) {
+      acc.push(a[i]);
+    } else if (objСlosed[acc.pop()] !== a[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 
@@ -350,8 +435,9 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  // throw new Error('Not implemented');
+  return num.toString(n);
 }
 
 
@@ -425,8 +511,34 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  // throw new Error('Not implemented');
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[i][0] === position[i][1] && position[i][0] === position[i][2]) {
+      if (position[i][0]) {
+        return position[i][0];
+      }
+    }
+  }
+
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[0][i] === position[1][i] && position[0][i] === position[2][i]) {
+      if (position[0][i]) {
+        return position[0][i];
+      }
+    }
+  }
+  if (position[0][0] === position[1][1] && position[0][0] === position[2][2]) {
+    if (position[0][0]) {
+      return position[0][0];
+    }
+  }
+  if (position[2][0] === position[1][1] && position[2][0] === position[0][2]) {
+    if (position[2][0]) {
+      return position[2][0];
+    }
+  }
+  return undefined;
 }
 
 

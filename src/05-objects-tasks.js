@@ -20,8 +20,14 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  // throw new Error('Not implemented');
+  const obj = { width, height };
+  function getArea() {
+    return this.width * this.height;
+  }
+  obj.getArea = getArea;
+  return obj;
 }
 
 
@@ -52,8 +58,11 @@ function getJSON(obj) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  // throw new Error('Not implemented');
+  const obj = JSON.parse(json);
+  const values = Object.values(obj);
+  return new proto.constructor(...values);
 }
 
 
@@ -112,32 +121,70 @@ function fromJSON(/* proto, json */) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  res: '',
+
+
+  element(value) {
+    this.err(1);
+    const obj = Object.create(this);
+    obj.numb = 1;
+    obj.res = this.res + value;
+    return obj;
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    this.err(2);
+    const obj = Object.create(this);
+    obj.numb = 2;
+    obj.res = `${this.res}#${value}`;
+    return obj;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    this.err(3);
+    const obj = Object.create(this);
+    obj.numb = 3;
+    obj.res = `${this.res}.${value}`;
+    return obj;
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    this.err(4);
+    const obj = Object.create(this);
+    obj.numb = 4;
+    obj.res = `${this.res}[${value}]`;
+    return obj;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    this.err(5);
+    const obj = Object.create(this);
+    obj.numb = 5;
+    obj.res = `${this.res}:${value}`;
+    return obj;
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    this.err(6);
+    const obj = Object.create(this);
+    obj.numb = 6;
+    obj.res = `${this.res}::${value}`;
+    return obj;
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    const obj = Object.create(this);
+    obj.res = `${selector1.res} ${combinator} ${selector2.res}`;
+    return obj;
+  },
+
+  stringify() {
+    return this.res;
+  },
+
+  err(numb) {
+    if (this.numb > numb) throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    if (this.numb === numb && (numb === 6 || numb === 1 || numb === 2)) throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
   },
 };
 
