@@ -319,24 +319,19 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
-  /* let nCheck = 0;
-  let bEven = false;
-
-  for (let n = ccn.length - 1; n >= 0; n -= 1) {
-    let nDigit = parseInt(ccn.charAt(n), 10);
-
-    if (bEven && (nDigit * 2) > 9) {
-      nDigit *= 2;
-      nDigit -= 9;
+function isCreditCardNumber(ccn) {
+  // throw new Error('Not implemented');
+  const arr = ccn.toString().split('').reverse();
+  const brr = arr.map((el, i) => {
+    if (i % 2 !== 0) {
+      if (2 * el > 9) {
+        return 2 * el - 9;
+      }
+      return 2 * el;
     }
-
-    nCheck += nDigit;
-    bEven = !bEven;
-  }
-
-  return (nCheck % 10) === 0; */
+    return el;
+  });
+  return brr.reduce((a, b) => a / 1 + b / 1) % 10 === 0;
 }
 
 
@@ -453,8 +448,18 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  // throw new Error('Not implemented');
+  let res = '';
+  const arr = pathes.map((el) => el.split('/'));
+
+  for (let i = 0; i < arr[0].length; i += 1) {
+    for (let j = 1; j < arr.length; j += 1) {
+      if (arr[0][i] !== arr[j][i]) return res;
+      if (j === arr.length - 1) res += `${arr[0][i]}/`;
+    }
+  }
+  return res;
 }
 
 
@@ -476,8 +481,20 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  // throw new Error('Not implemented');
+  const arr = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    arr[i] = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let sum = 0;
+      for (let n = 0; n < m1[0].length; n += 1) {
+        sum += m1[i][n] * m2[n][j];
+      }
+      arr[i][j] = sum;
+    }
+  }
+  return arr;
 }
 
 
